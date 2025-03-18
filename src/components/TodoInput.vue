@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, watchEffect } from 'vue'
+import { defineComponent, onBeforeMount, onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted, reactive, watchEffect } from 'vue'
 
 interface State {
   text: string;
@@ -54,6 +54,25 @@ export default defineComponent({
       } else {
         state.isError = false
       }
+    })
+
+    onBeforeMount(() => {
+      console.log('TodoInput onBeforeMount')
+    })
+    onMounted(() => {
+      console.log('TodoInput onMounted')
+    })
+    onBeforeUpdate(() => {
+      console.log('TodoInput onBeforeUpdate')
+    })
+    onUpdated(() => {
+      console.log('TodoInput onUpdated')
+    })
+    onBeforeUnmount(() => {
+      console.log('TodoInput onBeforeUnmount')
+    })
+    onUnmounted(() => {
+      console.log('TodoInput onUnmounted')
     })
 
     return {

@@ -5,7 +5,7 @@
         <tbody>
           <tr>
             <td class="td" style="width:5%">
-              <input type="checkbox" value="todo.done" v-on:change="done" />
+              <input type="checkbox" v-bind:checked="todo.done" v-on:change="done" />
             </td>
             <td class="td" style="width:20%">
               <span>{{ date }}</span>
@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue'
+import { computed, defineComponent, onBeforeMount, onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted, PropType } from 'vue'
 import { Todo } from '@/types/todo'
 
 export default defineComponent({
@@ -52,6 +52,25 @@ export default defineComponent({
       if (!props.todo) return ''
       const { date } = props.todo
       return '' + date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日'
+    })
+
+    onBeforeMount(() => {
+      console.log('TodoLabel onBeforeMount')
+    })
+    onMounted(() => {
+      console.log('TodoLabel onMounted')
+    })
+    onBeforeUpdate(() => {
+      console.log('TodoLabel onBeforeUpdate')
+    })
+    onUpdated(() => {
+      console.log('TodoLabel onUpdated')
+    })
+    onBeforeUnmount(() => {
+      console.log('TodoLabel onBeforeUnmount')
+    })
+    onUnmounted(() => {
+      console.log('TodoLabel onUnmounted')
     })
 
     return {
