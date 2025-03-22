@@ -87,20 +87,22 @@ export default defineComponent({
       saveData()
     }
     const removeTodo = (id: string) => {
-      state.todoList = state.todoList.filter(todo => todo.id !== id)
+      state.todoList = state.todoList.filter((todo: Todo) => todo.id !== id)
       saveData()
     }
     const doneTodo = (id: string) => {
-      const todo = state.todoList.find(todo => todo.id === id)
+      const todoList = state.todoList.slice()
+      const todo = todoList.find((todo: Todo) => todo.id === id)
       if (todo) {
         todo.done = !todo.done
+        state.todoList = todoList
         saveData()
       }
     }
 
     // computed
     const sortedTodo = computed(() => {
-      return state.todoList.slice().sort((a, b) => {
+      return state.todoList.slice().sort((a: Todo, b: Todo) => {
         return b.date.getTime() - a.date.getTime()
       })
     })
