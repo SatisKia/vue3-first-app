@@ -18,7 +18,8 @@ import { computed, defineComponent, onBeforeMount, onMounted, onBeforeUpdate, on
 import { Todo } from '@/types/todo'
 import TodoInput from '@/components/TodoInput.vue'
 import TodoLabel from '@/components/TodoLabel.vue'
-import MyCookie from '@/plugins/Cookie'
+import MyStorage from '@/plugins/Storage'
+import { v4 as uuid } from 'uuid'
 
 interface State {
   todoList: Todo[]
@@ -41,16 +42,16 @@ export default defineComponent({
 
       // データの読み込み処理
       state.todoList = [] as Todo[]
-      const cookie: MyCookie = new MyCookie()
+      const storage: MyStorage = new MyStorage()
       for (let i = 0; ; i++) {
-        const id = cookie.getValue('id' + i, '')
+        const id = storage.getValue('id' + i, '')
         if (id.length === 0) {
           break
         }
-        const done = cookie.getBool('done' + i, false)
-        const date = new Date(cookie.getNumber('date' + i, 0))
-        const text = cookie.getValue('text' + i, '')
-        const color = cookie.getValue('color' + i, '')
+        const done = storage.getBool('done' + i, false)
+        const date = new Date(storage.getNumber('date' + i, 0))
+        const text = storage.getValue('text' + i, '')
+        const color = storage.getValue('color' + i, '')
         state.todoList.push({
           id: id,
           done: done,
@@ -64,21 +65,23 @@ export default defineComponent({
       console.log('saveData')
 
       // データの書き込み処理
-      const cookie: MyCookie = new MyCookie()
+      const storage: MyStorage = new MyStorage()
       let i = 0
       for (; i < state.todoList.length; i++) {
         const todo = state.todoList[i]
-        cookie.setValue('id' + i, todo.id)
-        cookie.setBool('done' + i, todo.done)
-        cookie.setNumber('date' + i, todo.date.getTime())
-        cookie.setValue('text' + i, todo.text)
-        cookie.setValue('color' + i, todo.color)
+        storage.setValue('id' + i, todo.id)
+        storage.setBool('done' + i, todo.done)
+        storage.setNumber('date' + i, todo.date.getTime())
+        storage.setValue('text' + i, todo.text)
+        storage.setValue('color' + i, todo.color)
       }
-      cookie.setValue('id' + i, '')
+      storage.setValue('id' + i, '')
     }
     const addTodo = (text: string, color: string) => {
+      const id = uuid()
+      console.log('uuid ' + id)
       state.todoList = [...state.todoList, {
-        id: (new Date()).getTime().toString(),
+        id: id,
         done: false,
         date: new Date(),
         text: text,
