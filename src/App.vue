@@ -1,7 +1,6 @@
-<template>
-  <div id="app">
-    <my-todo />
-  </div>
+<template lang="pug">
+  div#app
+    my-todo
 </template>
 
 <script lang="ts">

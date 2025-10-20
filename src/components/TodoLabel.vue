@@ -1,26 +1,32 @@
-<template>
-  <div class="label" v-bind:style="{ 'background-color': (todo.done ? '#808080' : todo.color) }">
-    <div style="width:100%">
-      <table class="table">
-        <tbody>
-          <tr>
-            <td class="td" style="width:5%">
-              <input type="checkbox" v-bind:checked="todo.done" v-on:change="done" />
-            </td>
-            <td class="td" style="width:20%">
-              <span>{{ date }}</span>
-            </td>
-            <td class="td" style="width:65%">
-              <span>{{ todo.text }}</span>
-            </td>
-            <td class="td" style="width:10%">
-              <button v-if="todo.done" style="width:100%; border:0" v-bind:style="{ 'background-color': (todo.done ? '#808080' : todo.color) }" v-on:click="remove">消</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+<template lang="pug">
+  div.label(
+    v-bind:style="{ \
+      'background-color': (todo.done ? '#808080' : todo.color) }"
+  )
+    div(style="width:100%")
+      table.table
+        tbody
+          tr
+            td.td(style="width:5%")
+              input(
+                type="checkbox"
+                v-bind:checked="todo.done"
+                v-on:change="done"
+              )
+            td.td(style="width:20%")
+              span {{ date }}
+            td.td(style="width:65%")
+              span {{ todo.text }}
+            td.td(style="width:10%")
+              button(
+                v-if="todo.done"
+                style="width:100%; border:0"
+                v-bind:style="{ \
+                  'background-color': (todo.done ? \
+                  '#808080' : todo.color) }"
+                v-on:click="remove"
+              )
+                | 消
 </template>
 
 <script lang="ts">

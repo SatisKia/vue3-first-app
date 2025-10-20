@@ -1,16 +1,13 @@
-<template>
-  <div>
-    <todo-input
-      v-on:add="addTodo"
-    />
-    <todo-label
+<template lang="pug">
+  div
+    todo-input(v-on:add="addTodo")
+    todo-label(
       v-for="todo in sortedTodo"
       v-bind:key="todo.id"
       v-bind:todo="todo"
       v-on:done="doneTodo"
       v-on:remove="removeTodo"
-    />
-  </div>
+    )
 </template>
 
 <script lang="ts">
